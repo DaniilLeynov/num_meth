@@ -86,20 +86,20 @@ int main() {
         return std::sinh(1.0 / (1.0 + x*x));
     };
 
-auto f1_exact = [](double x) {
-    double u = 1.0/(1.0 + x*x);
-    return std::cosh(u) * (-2*x / std::pow(1+x*x,2));
-};
-auto f2_exact = [](double x) {
+    auto f1_exact = [](double x) {
+        double u = 1.0/(1.0 + x*x);
+        return std::cosh(u) * (-2*x / std::pow(1+x*x,2));
+    };
+    auto f2_exact = [](double x) {
 
-    double d = 1 + x*x;
-    double u = 1.0/d;
+        double d = 1 + x*x;
+        double u = 1.0/d;
 
-    double u1 = -2*x/(d*d);
-    double u2 = (6*x*x - 2)/(d*d*d);
+        double u1 = -2*x/(d*d);
+        double u2 = (6*x*x - 2)/(d*d*d);
 
-    return std::sinh(u)*u1*u1 + std::cosh(u)*u2;
-};
+        return std::sinh(u)*u1*u1 + std::cosh(u)*u2;
+    };
     std::ofstream file("errors.csv");
     file << "h,forward,central,second2,second4\n";
 
