@@ -83,18 +83,23 @@ int main() {
     std::vector<double> h_values = {0.2, 0.1, 0.05, 0.025, 0.0125};
 
     auto f = [](double x) {
-        return std::sinh(1.0 + x*x);
+        return std::sinh(1.0 / (1.0 + x*x));
     };
 
-    auto f1_exact = [](double x) {
-        return 2*x*std::cosh(1.0 + x*x);
-    };
+auto f1_exact = [](double x) {
+    double u = 1.0/(1.0 + x*x);
+    return std::cosh(u) * (-2*x / std::pow(1+x*x,2));
+};
+auto f2_exact = [](double x) {
 
-    auto f2_exact = [](double x) {
-        return 2*std::cosh(1.0 + x*x)
-               + 4*x*x*std::sinh(1.0 + x*x);
-    };
+    double d = 1 + x*x;
+    double u = 1.0/d;
 
+    double u1 = -2*x/(d*d);
+    double u2 = (6*x*x - 2)/(d*d*d);
+
+    return std::sinh(u)*u1*u1 + std::cosh(u)*u2;
+};
     std::ofstream file("errors.csv");
     file << "h,forward,central,second2,second4\n";
 
